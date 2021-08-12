@@ -10,11 +10,11 @@ import {
 } from 'https://deno.land/x/obsidian/clientMod.ts'
 
 
-import rsh from 'https://dev.jspm.io/react-syntax-highlighter'
+// import rsh from 'https://dev.jspm.io/react-syntax-highlighter'
 
-const realRSH: any = rsh;
+// const realRSH: any = rsh;
 
-const CodeBlock = realRSH.Prism;
+// const CodeBlock = realRSH.Prism;
 
 export {
     BrowserCache,
@@ -23,6 +23,6 @@ export {
     React,
     ReactDOMServer,
     ReactDom,
-    CodeBlock,
+    // CodeBlock,
 
 };
