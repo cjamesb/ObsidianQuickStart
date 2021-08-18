@@ -15,7 +15,7 @@ const app = new Application();
 app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
-  console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
+  //console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
 });
 
 app.use(async (ctx, next) => {
@@ -82,7 +82,7 @@ const GraphQLRouter = await ObsidianRouter<ObsRouter>({
   resolvers: resolvers, //need to input some resolvers
   redisPort: 6379,
   useCache: true,
-  usePlayground: false,
+  usePlayground: true,
 });
 
 // now we attach the graphql router routes to our app

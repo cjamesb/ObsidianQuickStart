@@ -54,3 +54,16 @@ deno run --allow-net --allow-read --allow-env --unstable server.tsx
 
 deno run --allow-all --unstable server.tsx
 
+
+
+Playground:
+
+    If you set the playground option to true in the Obsidian router options you can access the graphQL playground by going to http://localhost:3000/graphql in your browser.
+
+    Note: As a development tool the graphQL playground will continuously query the data base for the schema. It is recomened that you disable this functionality if you are not makeing direct changes to the schema.
+
+        On the graphQL playground page, in the top right there is a settings buttons you can click on this to bring up the settings menu.
+
+       Set the option for schema.polling.enable to false to only fetch the schema on the intial load of the page.
+
+          "schema.polling.enable": false
