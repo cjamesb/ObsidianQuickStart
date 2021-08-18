@@ -1,12 +1,13 @@
 /** @format */
 
 import { Application, Router } from "./serverDeps.ts";
-
 import { React, ReactDOMServer } from "./clientDeps.ts";
 import { Cron, ObsidianRouter, gql } from "./serverDeps.ts";
 import App from "./client/app.tsx";
 import { staticFileMiddleware } from "./staticFileMiddleware.ts";
-import { types, resolvers } from "./testDefs.ts";
+import resolvers from "./server/resolvers.ts";
+import types from "./server/schema.ts";
+import { createDb } from "./server/db/db.ts";
 
 const PORT = 3000;
 const app = new Application();
@@ -24,6 +25,10 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
+//create and seed DB
+createDb();
+
+// Create Route
 const router = new Router();
 
 router.get("/", (ctx: any) => {
@@ -54,7 +59,7 @@ const { files, diagnostics } = await Deno.emit("./client/client.tsx", {
 const bundleRouter = new Router();
 bundleRouter.get("/static/client.js", (ctx) => {
   ctx.response.headers.set("Content-Type", "text/html");
-  // context.response.body = clientJS;
+
   ctx.response.body = files["deno:///bundle.js"];
 });
 
