@@ -1,60 +1,78 @@
-# ObsidianQuickStart
-Repo to show obsidian
+# ObsidianQuickStart: Demo of Obsidian for local installation
+ 
 
-You must install deno on your local machine
-Install Deno:
+This demo requires the Deno runtime environment, as well as running postgres and redis servers.
 
-curl -fsSL https://deno.land/x/install/install.sh | sh
+* Install Deno:
 
-As of Deno 1.13.1 the program is stable, but breaking changes occured on 1.13.0.
-If after installing Deno there is any problem use the following script to revert 
-to Deno 1.12.2 as the development and testing of this occured on 1.12.2 
+    on Linux:
+       * curl -fsSL https://deno.land/x/install/install.sh | sh
 
-Set deno to version 1.12.2:
+    on Mac (with Homebrew):
+       * brew install deno
 
-    deno upgrade --version 1.12.2
+* Troubleshooting: Deno 1.13.0 is incompatible with Obsidian.  Please either upgrade (compatability restored as of 1.13.1) or revert to 1.12.2 using:
 
-
-
-We have a local postgres database build that you can use to try out some of the features of Obsidian 
-
-The .env file will declare the varibales needed for the server to start
-
-default .env variables
-
-REDIS_HOST=127.0.0.1
-PG_USER = obsidian_user
-PG_DATABASE = obsidian_db
-PG_PORT = 5432
-PG_HOSTNAME = 127.0.0.1
-PG_PASSWORD = obsidian
-
-Feel free to put whatever values you want for these credientals. When you run the server the specified database will be populated with information and graphQL will link up to the database.
-
-If you have postgres installed and want to just use the default credentails to test functionality 
-
-(1) Setup for local postgres database:
-
-sudo service postgresql start
-sudo -u postgres psql
-postgres=# create database obsidian_db;
-postgres=# create user obsidian_user with encrypted password 'obsidian';
-postgres=# grant all privileges on database obsidian_db to obsidian_user;
-
-
-(2) Redis Server must be running to use the cache
-    - Start your redis server and make sure you are directing to the correct port
-
-Linux
-    redis-server
+        deno upgrade --version 1.12.2
 
 
 
-deno run --allow-net --allow-read --allow-env --unstable server.tsx
+We have a script to populate a local postgres database with some sample data to try out some of the features of Obsidian 
 
-deno run --allow-all --unstable server.tsx
+The .env file defines the environmental values necessary for Obsidian to access your postgres and redis servers
+
+#### default .env variables
+* REDIS_HOST=127.0.0.1
+* PG_USER = obsidian_user
+* PG_DATABASE = obsidian_db
+* PG_PORT = 5432
+* PG_HOSTNAME = 127.0.0.1
+* PG_PASSWORD = obsidian
+
+Feel free to put whatever values you want for these credientals, but please note that these are the values being used in this guide. When you run the server the specified database will be populated with information and graphQL will link up to the database.
+
+ 
+
+### (1) Setup for local postgres database:
+* Default is running on localhost (127.0.0.1) at port 5432
+* Create a database called "obsidian_db"
+* Create a user "obsidian_user" with password "obsidian"
+* grant all privileges on the database to the user
 
 
+    #### Linux
+        * sudo service postgresql start
+        * sudo -u postgres psql
+        * postgres=# create database obsidian_db;
+        * postgres=# create user obsidian_user with encrypted password 'obsidian';
+        * postgres=# grant all privileges on database obsidian_db to obsidian_user;
+
+    #### Mac
+        install Postgres and psql if you don't already have them
+        Boot up Postgres on localhost with port 5432
+        run psql in the command line, then run the following lines in psql:
+             create database obsidian_db;
+             create user obsidian_user with encrypted password 'obsidian';
+             grant all privileges on database obsidian_db to obsidian_user;
+         you should be good. Go ahead and exit psql ("exit")
+
+
+
+### (2) Redis Server must be running to use the cache
+* Start your redis server and make sure it is listening on port 6379
+
+    #### Mac/Linux
+        redis-server
+
+
+### (3) Run server.tsx 
+* run the server.tsx file in Deno with the --unstable flag.  We're going to need access to the network, file read permissions, and the environment:
+     #### Mac/Linux
+        deno run --allow-net --allow-read --allow-env --unstable server.tsx
+
+
+
+NOTE: We have enabled the graphQL playground by default.  You can visit it at http://localhost:3000/graphql
 
 Playground:
 
