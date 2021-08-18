@@ -83,6 +83,8 @@ const GraphQLRouter = await ObsidianRouter<ObsRouter>({
   redisPort: 6379,
   useCache: true,
   usePlayground: true,
+  useQueryCache: true,
+  useRebuildCache: true,
 });
 
 // now we attach the graphql router routes to our app
